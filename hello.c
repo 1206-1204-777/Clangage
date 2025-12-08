@@ -1,63 +1,45 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// 変数実験
-int apple = 15; //グローバル変数
+// ポインタについての学習
+
+int sum(int x, int y,  int *a1, int *a2);
 int main(void){
-    {
-        int apple = 50; // ローカル変数
-        printf("%d\n", apple);
-    }
+    int apple = 10;
+    int *hoge = &apple;
+    printf("%d\n", apple);
+    printf("%d\n",*hoge); 
 
-    // 配列の学習
-    int array[10];
-    array[9] = 60;
-    printf("%d\n",array[10]);
-    //宣言と代入を同時に行う
-    int array2[100] = {12,13,14,100,56};
-    printf("%d\n",array2[0]);
-    printf("%d\n",array2[1]);
-    printf("%d\n",array2[2]);
-    printf("%d\n",array2[3]);
-    printf("%d\n",array2[4]);
+    int apple2 , *hoge2;
+    hoge2 = & apple2; // apple2とhoge2のアドレスを同じにする
 
-    int array3[] = {12,13,1,14,5};
-    printf("%d\n",array3[1]);
-    // for文を使った出力
-    int array4[] = {12,13,14};
-    for (int i = 0; i < sizeof(array4); i++)
-    {
-        printf("%d番目:%d\n",i,array4[i]);
-    }
+    printf("%p\n", &    apple2);
+    printf("%p\n", hoge2);
 
-    // 文字列を配列で扱う方法
-    char c = 'a';
-    printf("%c\n",c);
+    // ポインタ変数の宣言
+    int *hoge3;
+    // アドレスの代入
+    hoge3 = &apple; // hoge3にappleのアドレスを代入
+    printf("%p\n", &apple);
+    printf("%p\n", hoge3);
 
-    char ch[] = {'J','O','H','N','\0'};
-    printf("%s\n",ch);
-    char str[] = "256";
-    printf("%s\n",str);
+    // 参照先の値を変更
+    int *p,i;
+    p = &i;
+    *p = 15;
+    printf("%d\n", i);
+    printf("%d\n", *p);
 
-    // atoi
-    int str2 = atof(str);
-    printf("%i\n", str2 + 5);
-
-    // strcat
-    char str3[10] = "Hello ";
-    strcat(str3, ch);
-    printf("%s\n", str3);
-
-    // sprintf
-    char str4[20];
-    char str5[] = "star";
-    char str6[] = "wars";
-    int i = 3;
-    sprintf(str4, "%s%s%d",str5,str6,i);
-    printf("%s\n", str4);
-    char str7[256];
-    scanf("%s", str7);
-    i = strlen(str7);
-    printf("%d\n",i);
+    // 複数の値を返す
+    int sum1, sum2;
+    sum(30, 50, &sum1, &sum2);
+    printf("%d\n", sum1);
+    printf("%d\n", sum2);
     return 0;
 };
+
+int sum(int x, int y, int *a1, int *a2){
+    *a1 = x + y;
+    *a2 = x - y;
+    return 0;
+}
