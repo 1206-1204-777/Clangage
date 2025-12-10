@@ -9,12 +9,35 @@ struct studend
     char name[64];
     double weight;
     double height;
+}taro,hanako;
+
+struct fruits
+{
+    int apple;
+    int banana;
+    int orange;
 };
+void price(struct fruits store1);
 int main(void){
-
-    struct studend taro;
-
     taro.year = 10;
+    hanako.year = 12;
     printf("%d\n", taro.year);
+    printf("%d\n",hanako.year);
+
+    //構造体へ複数の値を代入
+    struct fruits store1 = {100, 200, 300};
+    struct fruits store2 = {50, 230, 400};
+    struct fruits store3 = store1; // 構造体内のデータ型が同じ場合のみ有効
+
+    price(store2);
+
+    // 構造体を配列に格納
+    
     return 0;
 };
+    // 構造体を引数で渡す
+    void price(struct fruits store1){
+        printf("%d\n",store1.apple);
+        printf("%d\n",store1.banana);
+        printf("%d\n",store1.orange);
+    }
