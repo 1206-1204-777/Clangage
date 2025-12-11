@@ -11,12 +11,12 @@ struct studend
     double height;
 }taro,hanako;
 
-struct fruits
+typedef struct fruits
 {
     int apple;
     int banana;
     int orange;
-};
+}fruits;
 void price(struct fruits store1);
 int main(void){
     taro.year = 10;
@@ -29,7 +29,8 @@ int main(void){
     struct fruits store2 = {50, 230, 400};
     struct fruits store3 = store1; // 構造体内のデータ型が同じ場合のみ有効
 
-    price(store2);
+    fruits store4 = store2;
+    price(store4);
 
     // 構造体を配列に格納
     
