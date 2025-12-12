@@ -30,7 +30,10 @@ int main(void)
     hello *hello2 = &hello1;
     printf("%d\n", hello2->num1);
 
-    
+    // ポインタの大きさについて
+    printf("%zu\n",sizeof(int*));
+    printf("%zu\n",sizeof(char*));
+    printf("%zu\n",sizeof(void*));
     return 0;
 }
 
