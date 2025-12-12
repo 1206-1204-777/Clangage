@@ -1,45 +1,80 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// ポインタについての追加学習
-typedef struct hello
-{
-    char h[56];
-    int num1;
-    int num2;
-}hello;
+// 連結リストについての学習
 
-int sum(int *x, int *y);
-int main(void)
-{
-    int apple = 100;
-    int orange = 150;
-    int *b = &apple;
-    int *c;
-    c = &apple;
+// ノードの定義
+typedef struct Node{
+    int data;
+    struct Node *next;
+}Node;
 
-    printf("%d\n", *b + *c);
-    printf("%d\n", apple + *c);
-    printf("%p\n", &apple);
-    printf("%p\n", b);
 
-    sum(&apple, &orange);
-    printf("%d, %d\n", apple, orange);
+Node *create_node(int value){
+    // ノード分の領域を確保
+    Node *new_node = (Node *)malloc(sizeof(Node));
 
-    hello hello1 = {"hello", 10, 56};
-    hello *hello2 = &hello1;
-    printf("%d\n", hello2->num1);
+    if (new_node == NULL){
+        perror("領域確保に失敗");
+        exit(EXIT_FAILURE);
+    }
+    new_node -> data = value;
+    new_node -> next = NULL;
 
-    // ポインタの大きさについて
-    printf("%zu\n",sizeof(int*));
-    printf("%zu\n",sizeof(char*));
-    printf("%zu\n",sizeof(void*));
-    return 0;
+    return new_node;
 }
 
-// この関数からmain関数の値を操作
-int sum(int *x, int *y){
-    *x = 25 + *y;
-    *y = 50 + 5;
+void add_to_node(Node **head_ref, int value){
+    Node *new_node = create_node(value);
 
+    if (*head_ref == NULL){
+        *head_ref = new_node;
+        return;
+    }
+    
+    Node *current = *head_ref;
+    while (current -> next != NULL){
+        current = current -> next;
+    }
+    current -> next = new_node;
+    
+}
+
+void print_node(Node *head){
+    Node *current = head;
+    while (current != NULL)
+    {
+        printf("%d -> ", current->data);
+        current = current -> next;
+    }
+    printf("NULL\n");
+    
+}
+
+
+void free_memory(Node *head){
+    Node *current = head;
+    Node *next_node;
+
+    while (current != NULL)
+    {
+        next_node = current->next;
+        free(current);
+        current = next_node;
+    }
+}
+
+
+int main(void)
+{
+    Node *head = NULL;
+
+    add_to_node(&head, 56);
+    add_to_node(&head, 10);
+    add_to_node(&head, 78);
+    print_node(head);
+
+    free_memory(head);
+
+    return 0;
 }
