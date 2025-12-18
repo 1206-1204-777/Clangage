@@ -43,5 +43,11 @@ int main(void)
     printf("未代入の p2[5] の値: %d\n", p2[5]);
     free(p2); 
     p2 = NULL;
+
+    // アライメントの実験
+    books books;
+    printf("%d\n", (int)sizeof(hoge));
+    printf("%d\n", (int)sizeof(int));
+    printf("%zu\n", sizeof(books.title));
     return 0;
 }
