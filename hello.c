@@ -4,50 +4,29 @@
 #include <ctype.h>
 #include <stdarg.h>
 #include <assert.h>
-// mallocについての学習
-typedef struct books
-{
-    int price;
-    char *title;
-    struct books *next;
-}books;
+// 宣言についての学習
+int func_p(double){
 
+}
 int main(void)
 {
-    // mallocの基礎
-    int hoge = 10;    
-    int *p = malloc(sizeof(hoge)); // 変数pの領域を確保
-    if (p == NULL)
+  
+    // 関数へのポインタの宣言
+    int (*func_p)(double);
+    // 配列の配列
+    int hoge[2][3] = {
+        {1,2,3},
+        {4,5,6}
+    };
+    for (int i = 0; i < 2; i++)
     {
-        fprintf(stderr, "ポインタがnullです\n");
-        return 1;    
+        for (int j = 0; j < 3; j++)
+        {
+            printf("%d\n", hoge[i][j]);
+        }
+        
     }
- 
-    *p = hoge;
-    printf("%d\n", *p);
-    free(p); // 変数pの領域を開放
-    p = NULL;
+   
     
-    // callocの学習
-    int *p2 = calloc(10 ,sizeof(hoge));
-    if (p2 == NULL)
-    {
-        fprintf(stderr, "メモリ確保に失敗\n");
-        return 1;
-    }
-    
-    p2[0] = hoge;
-    p2[1] = 1000;
-    printf("%d\n", p2[0]);
-    printf("%d\n", p2[1]);
-    printf("未代入の p2[5] の値: %d\n", p2[5]);
-    free(p2); 
-    p2 = NULL;
-
-    // アライメントの実験
-    books books;
-    printf("%d\n", (int)sizeof(hoge));
-    printf("%d\n", (int)sizeof(int));
-    printf("%zu\n", sizeof(books.title));
     return 0;
 }
