@@ -4,49 +4,66 @@
 #include <ctype.h>
 #include <stdarg.h>
 #include <assert.h>
-// 宣言についての学習
-int func_p(double){
 
+// ポインタ経由で複数の値を返す
+void func1(int *x, double *y){
+    *x = 5;
+    *y = 1.6 + *x;
 }
+// 配列のポインタを渡す
+void func2(int *array, int size){
+    for (int i = 0; i < size; i++)
+    {
+        printf("%d\n", array[i]);
+    }
+    
+}
+
 int main(void)
 {
+  int a;
+  double b;
+  func1(&a, &b);
+  printf("%d %f\n", a, b);
+
+  int array[] = {1, 2, 3, 4, 5};
+  printf("%zu\n",sizeof(array));
+  printf("%zu\n",sizeof(array[0]));
+  func2(array, sizeof(array) / sizeof(array[0]));
+
+  // mallocを使った動的配列
+  char buf[256];
+  int size;
+  int *arrays;
+
+  fgets(buf, 256, stdin); // 文字列を取得
+  sscanf(buf, "%d", &size); // 取得した文字列を配列に格納
+  arrays = malloc(sizeof(int)* size);
+
+  for (int i = 0; i < size; i++)
+  {
+    arrays[i] = i;
+  }
+  for (int i = 0; i < size; i++)
+  {
+    printf("%d ", arrays[i]);
+  }
+  printf("\n");
+  // mallocを使った動的配列
+  int *arrays2 = NULL;
+  int size2 = 0;
+  char buf2[256];
+
+  while (fgets(buf2, 256, stdin) != NULL)
+  {
+    size2 ++;
+    arrays2 = realloc(arrays2, sizeof(int) * size2);
+    sscanf(buf2, "%d", &size2);
+  }
+  for (int i = 0; i < size2; i++)
+  {
+    printf("%d\n", arrays2[i]);
+  }
   
-    // 関数へのポインタの宣言
-    int (*func_p)(double);
-    // 配列の配列
-    int hoge[2][3] = {
-        {1,2,3},
-        {4,5,6}
-    };
-    for (int i = 0; i < 2; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            printf("%d\n", hoge[i][j]);
-        }
-        
-    }
-    // sizeofを使った配列サイズの確認
-   printf("%zu\n", sizeof(hoge));
-
-   // 配列の初期化
-   int test_array[100];
-   char *color[] = {
-    "red",
-    "green",
-    "blue",
-   };
-
-   int test_a[100];
-   int test[][6] = {
-    {10, 20},
-    {10, 50}
-   };
-   char test_c[] = "test"; // t, e, s, t, \0の配列
-   printf("%s\n", test_c);
-   printf("%p\n", &color);
-   printf("%p\n", &color[0]);
-   printf("%p\n", &test);
-   printf("%p\n", &test[4]);
     return 0;
 }
