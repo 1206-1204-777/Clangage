@@ -26,7 +26,27 @@ int main(void)
         }
         
     }
-   
-    
+    // sizeofを使った配列サイズの確認
+   printf("%zu\n", sizeof(hoge));
+
+   // 配列の初期化
+   int test_array[100];
+   char *color[] = {
+    "red",
+    "green",
+    "blue",
+   };
+
+   int test_a[100];
+   int test[][6] = {
+    {10, 20},
+    {10, 50}
+   };
+   char test_c[] = "test"; // t, e, s, t, \0の配列
+   printf("%s\n", test_c);
+   printf("%p\n", &color);
+   printf("%p\n", &color[0]);
+   printf("%p\n", &test);
+   printf("%p\n", &test[4]);
     return 0;
 }
