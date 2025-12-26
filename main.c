@@ -1,14 +1,49 @@
 #include <stdio.h>
+#include <assert.h>
+#include <stdlib.h>
+
+/*動的配列に動的配列をダブルポインタを使い格納する方法*/
+#define ALLOC_SIZE (256)
 #include "read_line.h"
 
+char **add_line(char **text_data, char *line, int *line_alloc_num, int *line_num){
+    assert(*line_alloc_num >= *line_num);
+    if (*line_alloc_num == *line_num){
+        text_data = realloc(text_data, (*line_alloc_num + ALLOC_SIZE) * sizeof(char));
+        *line_alloc_num += ALLOC_SIZE;
+    }
+    text_data[*line_num] = line;
+    (*line_num)++;
+
+    return text_data;
+}
+
+char **read_file(FILE *fp, int *line_num_p){
+    char **text_data = NULL;
+    int line_num = 0;
+    int line_alloc_num = 0;
+    char *line;
+
+while ((line = read_line(fp)) != NULL)
+{
+    text_data = add_line(text_data, line, &line_alloc_num, &line_num);
+    *line_num_p = line_num;
+    return text_data;
+}
+
+}
 int main(void)
 {
-    char *line;
-    while ((line = read_line(stdin)) != NULL)
+    char **text_data;
+    int line_num;
+
+    text_data = read_file(stdin, &line_num);
+    for (int i = 0; i < line_num; i++)
     {
-        printf("%s\n", line);
+        printf("%s\n", text_data[i]);
+
     }
-    
-free_buffer();
+    free_buffer();
     return 0;
+    
 }
