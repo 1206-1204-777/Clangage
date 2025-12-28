@@ -2,8 +2,12 @@
 #define READ_LINE_H_INCLUDED
 
 #include <stdio.h>
-
-char *read_line(FILE *fp);
+typedef enum{
+    READ_LINE_SUCCESS,
+    READ_LINE_EOF,
+    RESD_LINE_OUT_OF_MEMORY
+}ReadLineStatuse;
+ReadLineStatuse read_line(FILE *fp, char **line);
 void free_buffer(void);
 
 #endif /*READ_LINE_H_INCLUDED*/
