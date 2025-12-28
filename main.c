@@ -2,48 +2,34 @@
 #include <assert.h>
 #include <stdlib.h>
 
-/*動的配列に動的配列をダブルポインタを使い格納する方法*/
-#define ALLOC_SIZE (256)
-#include "read_line.h"
-
-char **add_line(char **text_data, char *line, int *line_alloc_num, int *line_num){
-    assert(*line_alloc_num >= *line_num);
-    if (*line_alloc_num == *line_num){
-        text_data = realloc(text_data, (*line_alloc_num + ALLOC_SIZE) * sizeof(char));
-        *line_alloc_num += ALLOC_SIZE;
-    }
-    text_data[*line_num] = line;
-    (*line_num)++;
-
-    return text_data;
-}
-
-char **read_file(FILE *fp, int *line_num_p){
-    char **text_data = NULL;
-    int line_num = 0;
-    int line_alloc_num = 0;
-    char *line;
-
-while ((line = read_line(fp)) != NULL)
-{
-    text_data = add_line(text_data, line, &line_alloc_num, &line_num);
-    *line_num_p = line_num;
-    return text_data;
-}
-
-}
-int main(void)
-{
-    char **text_data;
-    int line_num;
-
-    text_data = read_file(stdin, &line_num);
-    for (int i = 0; i < line_num; i++)
+/*コマンド行引数の使い方についての学習*/
+/*catコマンドと同様の機能を実装*/
+void type_one_file(FILE *fp){
+    int ch;
+    while ((ch = getc(fp)) != EOF)
     {
-        printf("%s\n", text_data[i]);
-
+        putchar(ch);
     }
-    free_buffer();
-    return 0;
     
+}
+int main(int argc, char const *argv[])
+{
+    if(argc == 1){
+        type_one_file(stdin);
+    }else
+    {
+        FILE *fp;
+        for (int i = 0; i < argc; i++)
+        {
+            fp = fopen(argv[i], "rb");
+            if (fp == NULL){
+                fprintf(stderr, "%s:%s can not open.\n", argv[0], argv[1]);
+                exit(1);
+            }
+            type_one_file(fp);
+        }
+        
+    }
+    
+    return 0;
 }
