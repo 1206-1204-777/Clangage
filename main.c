@@ -24,6 +24,27 @@ int main(void)
         {10, 11, 12}
     };
     func(4, 3, hoge);
+    /*VLAで2次元配列領域を確保*/
+    int size;
+    scanf("%d", &size);
+    int (*bord)[size] = malloc(sizeof(int) * size * size);
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            bord[i][j] = i * size + j;
+        }
+        
+    }
+        for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            printf("%2d ", bord[i][j]);
+        }
+        
+    }
+    printf("\n");
     return 0;
     
 }
